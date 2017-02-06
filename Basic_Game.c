@@ -1,47 +1,37 @@
 #include <stdio.h>
 #include <conio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "screen.h"
 
-int g_nFrameCount;
+int g_nFrameCounter = 0;
+int g_nCurFrame = 0;
+char g_sCurFrame[5];
+clock_t curTime, oldTime;
 
 void Init();
-void KeyProcess(int nKey);
 void Update();
 void Render();
 void Release();
 
 int main(void)
 {
-	clock_t CurTime, OldTime;
-	
-
+	ScreenInit();
 	Init();			// 초기화
 
-	while(1)
+	oldTime = clock();
+
+	while (1)
 	{
-		OldTime = clock();
-
-		if(_kbhit())
-		{
-			KeyProcess(_getch())
-		}
-
 		Update();	// 데이터 갱신
+
 		Render();	// 화면 출력
-		while(1)
-		{
-			CurTime = clock();
 
-			if( CurTime - OldTime > 33 )
-			{
-				break;
-			} 
-		}
-
-		g_nFrameCount++;
 
 	}
 
 	Release();		// 해제
+	ScreenRelease();
 
 	return 0;
 }
@@ -51,42 +41,30 @@ void Init()
 
 }
 
-void KeyProcess(int nKey)
-{
-	nKey = _getch();
-	
-	if(nKey == 'q')		// 게임 종료
-	{
-		break;
-	}
-	else
-	{
-		switch( nKey )
-		{
-			case "j":
-				
-				break;
-
-			case "i":
-				
-				break;
-		}
-	}
-}
-
-
 void Update()
 {
+	curTime = clock();
+	if ((curTime - oldTime) >= 1000)
+	{
+		g_nCurFrame = g_nFrameCounter;
+		g_nFrameCounter = 0;
 
+		oldTime = curTime;
+	}
+	g_nFrameCounter++;
 }
 void Render()
 {
+	ScreenClear();
+	// 출력 코드
 
+	itoa(g_nCurFrame, g_sCurFrame, 10);
+	ScreenPrint(5, 5, g_sCurFrame);
+
+	ScreenFlipping();
 }
 void Release()
 {
 
 }
 
-
-// 한 장면을 출력하는데 33millisecond 미만이면 대기 상태에 있게하고, 아니면 출력을 하도록 하게하면 된다. 
