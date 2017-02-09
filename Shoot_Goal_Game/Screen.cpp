@@ -30,7 +30,7 @@ void ScreenClear()
 {
 	COORD Coor = { 0, 0 };
 	DWORD dw;
-	FillConsoleOutputCharacter(g_hScreen[g_nScreenIndex], ' ', 120 * 25, Coor, &dw);
+	FillConsoleOutputCharacter(g_hScreen[g_nScreenIndex], ' ', 120 * 30, Coor, &dw);
 
 }
 

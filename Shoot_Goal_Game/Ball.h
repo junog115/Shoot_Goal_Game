@@ -14,7 +14,7 @@ class Ball
 	clock_t OldTime;
 
 	// 공의 모양
-	std::string sBallForm = "◎";
+	std::string sBallForm;
 
 public:
 	Ball()
@@ -23,13 +23,16 @@ public:
 		nMoveX = 20;
 		nMoveY = 19;
 		MoveTime = 100;
+		sBallForm = "◎";
 	}
 
 	void SetBallPosition(Player MainPlayer);
 	void ChangeBallSpeed(clock_t Speed);
 	void PrintBall(void);
 	void ShootBall(void);
-
+	int GetBallX(void);
+	int GetBallY(void);
+	void Reset(void);
 };
 
 

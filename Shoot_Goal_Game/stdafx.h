@@ -18,6 +18,12 @@
 #include "Player.h"
 #include "screen.h"
 #include "Ball.h"
+#include "target.h"
+
+#define MAXRIGHTX 40
+#define MAXLEFTX 0
+#define MAXUPY 0
+#define MAXDOWNY 25
 
 using namespace std;
 

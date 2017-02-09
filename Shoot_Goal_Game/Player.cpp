@@ -2,9 +2,9 @@
 
 void Player::PlayerMoveLeft(void)
 {
-	if ((nPrintX <= 0) || ((nPrintX + nPlayerLength) > nMaxMoveX))
+	if ((nPrintX <= MAXLEFTX) || ((nPrintX + nPlayerLength) > MAXRIGHTX))
 	{
-		if (nMoveX <= 0)
+		if (nMoveX <= MAXLEFTX)
 		{
 			return;
 		}
@@ -23,9 +23,9 @@ void Player::PlayerMoveLeft(void)
 
 void Player::PlayerMoveRight(void)
 {
-	if ((nPrintX < 0) || (nPrintX + nPlayerLength) >= nMaxMoveX)
+	if ((nPrintX < MAXLEFTX) || (nPrintX + nPlayerLength) >= MAXRIGHTX)
 	{
-		if ((nMoveX + 2) == nMaxMoveX)
+		if ((nMoveX + 2) == MAXRIGHTX)
 		{
 			return;
 		}
@@ -44,14 +44,14 @@ void Player::PlayerMoveRight(void)
 
 void Player::PrintPlayer(void)
 {
-	if (nPrintX < 0)
+	if (nPrintX < MAXLEFTX)
 	{
-		ScreenPrint(0, nPrintY, &sPlayerForm[nPrintX * -1]);
+		ScreenPrint(MAXLEFTX, nPrintY, &sPlayerForm[nPrintX * -1]);
 	}
-	else if ((nPrintX + nPlayerLength) > nMaxMoveX)
+	else if ((nPrintX + nPlayerLength) > MAXRIGHTX)
 	{
 		string sPlayerCutForm(sPlayerForm);
-		sPlayerCutForm.erase(nPlayerLength - ((nPrintX + nPlayerLength) - nMaxMoveX), nPlayerLength);
+		sPlayerCutForm.erase(nPlayerLength - ((nPrintX + nPlayerLength) - MAXRIGHTX), nPlayerLength);
 
 		ScreenPrint(nPrintX, nPrintY, sPlayerCutForm);
 	}
@@ -69,4 +69,16 @@ int Player::GetPlayerX(void)
 int Player::GetPlayerY(void)
 {
 	return nMoveY;
+}
+
+void Player::Reset(void)
+{
+	nCenterX = 4;
+	nCenterY = 0;
+	nMoveX = 20;
+	nMoveY = 20;
+	nPrintX = nMoveX - nCenterX;
+	nPrintY = nMoveX - nCenterY;
+	sPlayerForm = "┖━●━┚";
+	nPlayerLength = sPlayerForm.length();
 }

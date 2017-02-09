@@ -2,33 +2,30 @@
 
 void Ball::SetBallPosition(Player MainPlayer)
 {
-	if (IsReady == true)
+	if (IsReady == false)
+	{
+		clock_t CurTime;
+	
+		CurTime = clock();
+		if (nMoveY <= (MAXUPY + 2))
+		{
+			nMoveX = MainPlayer.GetPlayerX();
+			nMoveY = MainPlayer.GetPlayerY();
+			nMoveY--;
+
+			IsReady = !IsReady;
+		}
+		else if(CurTime - OldTime >= MoveTime)
+		{
+			OldTime = CurTime;
+			nMoveY--;
+		}
+	}
+	else (IsReady == true)
 	{
 		nMoveX = MainPlayer.GetPlayerX();
 		nMoveY = MainPlayer.GetPlayerY();
 		nMoveY--;
-	}
-	else
-	{
-		clock_t CurTime;
-
-		CurTime = clock();
-		if (CurTime - OldTime >= MoveTime)
-		{
-			OldTime = CurTime;
-			if (nMoveY <= 2)
-			{
-				nMoveX = MainPlayer.GetPlayerX();
-				nMoveY = MainPlayer.GetPlayerY();
-				nMoveY--;
-
-				IsReady = !IsReady;
-			}
-			else
-			{
-				nMoveY--;
-			}
-		}
 	}
 }
 
@@ -50,4 +47,23 @@ void Ball::ShootBall(void)
 void Ball::ChangeBallSpeed(clock_t Speed)
 {
 	MoveTime = Speed;
+}
+
+int Ball::GetBallX(void)
+{
+	return nMoveX;
+}
+
+int Ball::GetBallY(void)
+{
+	return nMoveY;
+}
+
+void Ball::Reset(void)
+{
+	IsReady = true;
+	nMoveX = 20;
+	nMoveY = 19;
+	MoveTime = 100;
+	sBallForm = "◎";
 }

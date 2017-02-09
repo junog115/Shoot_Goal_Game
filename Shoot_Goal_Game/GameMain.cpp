@@ -2,8 +2,13 @@
 
 Player MainPlayer;
 Ball PlayerBall;
+Target PlayerTarget;
 
-string g_string;
+int g_nHit = 0;
+string sHitNumber;
+string NoticeKey = 
+" 'J' : Left  |  'L' : Right  |  'K' : Shoot  \n\n 'R' : Reset  |  'Q' : Quit ";
+
 
 void Init();
 void Update();
@@ -39,17 +44,27 @@ void Update()
 {
 	KeyProcess();
 
+	if (PlayerTarget.IsAttackTarget(PlayerBall) == true)
+	{
+		g_nHit++;
+		PlayerBall.SetBallPosition(MainPlayer);
+	}
+	sHitNumber = "Hit target : " + to_string(g_nHit);
+
+	PlayerTarget.MoveTarget();
 	PlayerBall.SetBallPosition(MainPlayer);
-	g_string = "플레이어의 위치 " + to_string(MainPlayer.GetPlayerX()) + ", " + to_string(MainPlayer.GetPlayerY());
 }
 
 void Render()
 {
 	ScreenClear();
-	ScreenPrint(0, 0, g_string);
+	ScreenPrint(MAXRIGHTX + 3, MAXUPY + 3, sHitNumber);
 
 	MainPlayer.PrintPlayer();
 	PlayerBall.PrintBall();
+	PlayerTarget.PrintTarget();
+
+	ScreenPrint(MAXLEFTX, MAXDOWNY, NoticeKey);
 
 	ScreenFlipping();
 }
@@ -75,6 +90,13 @@ void KeyProcess(void)
 
 		case 'k':
 			PlayerBall.ShootBall();
+			break;
+
+		case 'r':
+			MainPlayer.Reset();
+			PlayerBall.Reset();
+			PlayerTarget.Reset();
+			g_nHit = 0;
 			break;
 
 		case 'q':
