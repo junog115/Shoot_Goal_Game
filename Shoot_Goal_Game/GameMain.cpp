@@ -1,9 +1,9 @@
 #include "stdafx.h"
 
-using namespace std;
+Player MainPlayer;
+Ball PlayerBall;
 
-Player mainPlayer;
-char g_string[100];
+string g_string;
 
 void Init();
 void Update();
@@ -39,7 +39,9 @@ void Update()
 {
 	KeyProcess();
 
-	sprintf_s(g_string, "플레이어의 위치 : %d, %d", mainPlayer.GetPlayerX(), mainPlayer.GetPlayerY());
+	PlayerBall.SetBallPosition();
+	
+	g_string = "플레이어의 위치 " + to_string(MainPlayer.GetPlayerX()) + ", " + to_string(MainPlayer.GetPlayerY());
 }
 
 void Render()
@@ -47,7 +49,8 @@ void Render()
 	ScreenClear();
 	ScreenPrint(0, 0, g_string);
 
-	mainPlayer.PrintPlayer();
+	MainPlayer.PrintPlayer();
+	PlayerBall.PrintBall();
 
 	ScreenFlipping();
 }
@@ -64,11 +67,15 @@ void KeyProcess(void)
 		switch (_getch())
 		{
 		case 'j':
-			mainPlayer.PlayerMoveLeft();
+			MainPlayer.PlayerMoveLeft();
 			break;
 
 		case 'l':
-			mainPlayer.PlayerMoveRight();
+			MainPlayer.PlayerMoveRight();
+			break;
+
+		case 'k':
+			PlayerBall.ShootBall(MainPlayer);
 			break;
 
 		case 'q':

@@ -9,7 +9,7 @@ class Player
 	int nMoveX, nMoveY;
 	int nPrintX, nPrintY;
 	// Player Character 모습 및 길이
-	char sPlayerForm[11] = "┖━●━┚";
+	std::string sPlayerForm = "┖━●━┚";
 	int nPlayerLength;
 	// 최대로 움직일 수 있는 우측 X 좌표
 	int nMaxMoveX = 40;
@@ -23,7 +23,7 @@ public:
 		nMoveY = 20;
 		nPrintX = nMoveX - nCenterX;
 		nPrintY = nMoveX - nCenterY;
-		nPlayerLength = strlen(sPlayerForm);
+		nPlayerLength = sPlayerForm.length();
 	}
 
 	void PlayerMoveLeft(void);
