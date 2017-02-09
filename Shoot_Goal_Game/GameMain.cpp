@@ -39,8 +39,7 @@ void Update()
 {
 	KeyProcess();
 
-	PlayerBall.SetBallPosition();
-	
+	PlayerBall.SetBallPosition(MainPlayer);
 	g_string = "플레이어의 위치 " + to_string(MainPlayer.GetPlayerX()) + ", " + to_string(MainPlayer.GetPlayerY());
 }
 
@@ -75,7 +74,7 @@ void KeyProcess(void)
 			break;
 
 		case 'k':
-			PlayerBall.ShootBall(MainPlayer);
+			PlayerBall.ShootBall();
 			break;
 
 		case 'q':

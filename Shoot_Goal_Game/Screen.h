@@ -6,7 +6,7 @@ void ScreenInit();
 void ScreenFlipping();
 void ScreenClear();
 void ScreenRelease();
-void ScreenPrint(int x, int y, std::string strPrint);
+void ScreenPrint(short x, short y, std::string strPrint);
 void SetColor(unsigned short color);
 
 

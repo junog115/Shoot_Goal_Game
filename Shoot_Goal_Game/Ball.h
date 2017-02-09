@@ -25,7 +25,8 @@ public:
 		MoveTime = 100;
 	}
 
-	void SetBallPosition(Palyer MainPlayer);
+	void SetBallPosition(Player MainPlayer);
+	void ChangeBallSpeed(clock_t Speed);
 	void PrintBall(void);
 	void ShootBall(void);
 

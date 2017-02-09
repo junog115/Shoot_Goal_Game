@@ -2,7 +2,7 @@
 
 void Player::PlayerMoveLeft(void)
 {
-	if ((mainPlayer.nPrintX <= 0) || ((nPrintX + nPlayerLength) > nMaxMoveX))
+	if ((nPrintX <= 0) || ((nPrintX + nPlayerLength) > nMaxMoveX))
 	{
 		if (nMoveX <= 0)
 		{
@@ -44,12 +44,10 @@ void Player::PlayerMoveRight(void)
 
 void Player::PrintPlayer(void)
 {
-	// 좌측 clipping
 	if (nPrintX < 0)
 	{
 		ScreenPrint(0, nPrintY, &sPlayerForm[nPrintX * -1]);
 	}
-	// 우측 clipping
 	else if ((nPrintX + nPlayerLength) > nMaxMoveX)
 	{
 		string sPlayerCutForm(sPlayerForm);
@@ -57,7 +55,6 @@ void Player::PrintPlayer(void)
 
 		ScreenPrint(nPrintX, nPrintY, sPlayerCutForm);
 	}
-	// 단순 출력
 	else
 	{
 		ScreenPrint(nPrintX, nPrintY, sPlayerForm);

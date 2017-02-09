@@ -40,7 +40,7 @@ void ScreenRelease()
 	CloseHandle(g_hScreen[1]);
 }
 
-void ScreenPrint(int x, int y, std::string strPrint)
+void ScreenPrint(short x, short y, std::string strPrint)
 {
 	DWORD dw;
 	COORD CursorPosition = { x, y };

@@ -2,7 +2,7 @@
 
 void Ball::SetBallPosition(Player MainPlayer)
 {
-	if(IsReady == true)
+	if (IsReady == true)
 	{
 		nMoveX = MainPlayer.GetPlayerX();
 		nMoveY = MainPlayer.GetPlayerY();
@@ -13,10 +13,10 @@ void Ball::SetBallPosition(Player MainPlayer)
 		clock_t CurTime;
 
 		CurTime = clock();
-		if(CurTime - OldTime >= MoveTime)
+		if (CurTime - OldTime >= MoveTime)
 		{
 			OldTime = CurTime;
-			if(nMoveY <= 2)
+			if (nMoveY <= 2)
 			{
 				nMoveX = MainPlayer.GetPlayerX();
 				nMoveY = MainPlayer.GetPlayerY();
@@ -40,9 +40,14 @@ void Ball::PrintBall(void)
 
 void Ball::ShootBall(void)
 {
-	if(IsReady == true)
+	if (IsReady == true)
 	{
 		OldTime = clock();
 		IsReady = !IsReady;
 	}
+}
+
+void Ball::ChangeBallSpeed(clock_t Speed)
+{
+	MoveTime = Speed;
 }
