@@ -14,6 +14,7 @@ class Target
 public:
 	Target()
 	{
+		bTargetDirection = true;
 		nPrintX = 10;
 		nPrintY = 3;
 		MoveTime = 200;

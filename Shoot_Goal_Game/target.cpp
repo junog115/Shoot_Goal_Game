@@ -54,7 +54,7 @@ bool Target::IsAttackTarget(Ball Attacker)
 {
 	if(Attacker.GetBallY() == nPrintY)
 	{
-		if(Attacker.GetBallX() > nPrintX && Attacker.GetBallY() < (nPrintX + nTargetLength))
+		if(Attacker.GetBallX() > (nPrintX + 2) && Attacker.GetBallX() < (nPrintX + nTargetLength - 2))
 		{
 			return true;
 		}

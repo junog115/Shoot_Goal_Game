@@ -7,7 +7,7 @@ void Ball::SetBallPosition(Player MainPlayer)
 		clock_t CurTime;
 	
 		CurTime = clock();
-		if (nMoveY <= (MAXUPY + 2))
+		if (nMoveY <= (MAXUPY + 3))
 		{
 			nMoveX = MainPlayer.GetPlayerX();
 			nMoveY = MainPlayer.GetPlayerY();
@@ -21,7 +21,7 @@ void Ball::SetBallPosition(Player MainPlayer)
 			nMoveY--;
 		}
 	}
-	else (IsReady == true)
+	else
 	{
 		nMoveX = MainPlayer.GetPlayerX();
 		nMoveY = MainPlayer.GetPlayerY();
