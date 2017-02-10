@@ -19,14 +19,14 @@ public:
 		nPrintY = 3;
 		MoveTime = 200;
 		OldTime = clock();
-		sTargetForm = "□----------------□";
+		sTargetForm = "□-----------□";
 		nTargetLength = sTargetForm.length();
 	}
 
 	void MoveTarget(void);
 	void PrintTarget(void);
-	void ChangeTargetSpeed(clock_t Speed);
-	void ChangeTargetSize(int nSize);
+	void UpTargetSpeed(clock_t Speed);
+	void DownTargetSize(int nSize);
 	bool IsAttackTarget(Ball Attacker);
 	void Reset(void);
 

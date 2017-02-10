@@ -12,7 +12,7 @@ class Ball
 	int nMoveY;
 	clock_t MoveTime;
 	clock_t OldTime;
-
+	int nTryShoot;
 	// 공의 모양
 	std::string sBallForm;
 
@@ -24,14 +24,18 @@ public:
 		nMoveY = 19;
 		MoveTime = 100;
 		sBallForm = "◎";
+		nTryShoot = 0;
 	}
 
 	void SetBallPosition(Player MainPlayer);
-	void ChangeBallSpeed(clock_t Speed);
+	void DownBallSpeed(clock_t Speed);
 	void PrintBall(void);
 	void ShootBall(void);
 	int GetBallX(void);
 	int GetBallY(void);
+	int GetTryShoot(void);
+	bool GetIsReady(void);
+	void ResetTryNumber(void);
 	void Reset(void);
 };
 

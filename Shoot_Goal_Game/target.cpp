@@ -8,13 +8,13 @@ void Target::PrintTarget(void)
 void Target::MoveTarget(void)
 {
 	clock_t CurTime = clock();
-	
-	if((CurTime - OldTime) >= MoveTime)
+
+	if ((CurTime - OldTime) >= MoveTime)
 	{
 		OldTime = CurTime;
-		if(bTargetDirection == true)
+		if (bTargetDirection == true)
 		{
-			if(nPrintX == MAXLEFTX)
+			if (nPrintX == MAXLEFTX)
 			{
 				bTargetDirection = !bTargetDirection;
 				nPrintX++;
@@ -26,7 +26,7 @@ void Target::MoveTarget(void)
 		}
 		else
 		{
-			if((nPrintX + nTargetLength) == MAXRIGHTX)
+			if ((nPrintX + nTargetLength) == MAXRIGHTX)
 			{
 				bTargetDirection = !bTargetDirection;
 				nPrintX--;
@@ -39,22 +39,25 @@ void Target::MoveTarget(void)
 	}
 }
 
-void Target::ChangeTargetSpeed(clock_t Speed)
+void Target::UpTargetSpeed(clock_t Speed)
 {
-	MoveTime = Speed;
+	MoveTime -= Speed;
 }
 
-void Target::ChangeTargetSize(int nSize)
+void Target::DownTargetSize(int nSize)
 {
-	sTargetForm.erase(2, 2 + (nTargetLength - nSize));
-	nTargetLength = sTargetForm.length();
+	if ((nTargetLength - nSize) > 4)
+	{
+		sTargetForm.erase(2, 1 + nSize);
+		nTargetLength = sTargetForm.length();
+	}
 }
 
 bool Target::IsAttackTarget(Ball Attacker)
 {
-	if(Attacker.GetBallY() == nPrintY)
+	if (Attacker.GetBallY() == nPrintY)
 	{
-		if(Attacker.GetBallX() > (nPrintX + 2) && Attacker.GetBallX() < (nPrintX + nTargetLength - 2))
+		if (Attacker.GetBallX() > (nPrintX + 1) && Attacker.GetBallX() < (nPrintX + nTargetLength - 2))
 		{
 			return true;
 		}
@@ -65,10 +68,10 @@ bool Target::IsAttackTarget(Ball Attacker)
 void Target::Reset(void)
 {
 	nPrintX = 10;
-	nPrintY = 2;
+	nPrintY = 3;
 	MoveTime = 200;
 	OldTime = clock();
-	sTargetForm = "□----------------□";
+	sTargetForm = "□-----------□";
 	nTargetLength = sTargetForm.length();
 }
 

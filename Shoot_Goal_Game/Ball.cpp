@@ -5,7 +5,7 @@ void Ball::SetBallPosition(Player MainPlayer)
 	if (IsReady == false)
 	{
 		clock_t CurTime;
-	
+
 		CurTime = clock();
 		if (nMoveY <= (MAXUPY + 3))
 		{
@@ -15,7 +15,7 @@ void Ball::SetBallPosition(Player MainPlayer)
 
 			IsReady = !IsReady;
 		}
-		else if(CurTime - OldTime >= MoveTime)
+		else if (CurTime - OldTime >= MoveTime)
 		{
 			OldTime = CurTime;
 			nMoveY--;
@@ -40,13 +40,14 @@ void Ball::ShootBall(void)
 	if (IsReady == true)
 	{
 		OldTime = clock();
+		nTryShoot++;
 		IsReady = !IsReady;
 	}
 }
 
-void Ball::ChangeBallSpeed(clock_t Speed)
+void Ball::DownBallSpeed(clock_t Speed)
 {
-	MoveTime = Speed;
+	MoveTime += Speed;
 }
 
 int Ball::GetBallX(void)
@@ -59,6 +60,21 @@ int Ball::GetBallY(void)
 	return nMoveY;
 }
 
+int Ball::GetTryShoot(void)
+{
+	return nTryShoot;
+}
+
+bool Ball::GetIsReady(void)
+{
+	return IsReady;
+}
+
+void Ball::ResetTryNumber(void)
+{
+	nTryShoot = 0;
+}
+
 void Ball::Reset(void)
 {
 	IsReady = true;
@@ -66,4 +82,5 @@ void Ball::Reset(void)
 	nMoveY = 19;
 	MoveTime = 100;
 	sBallForm = "◎";
+	nTryShoot = 0;
 }

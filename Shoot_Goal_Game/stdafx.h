@@ -19,11 +19,13 @@
 #include "screen.h"
 #include "Ball.h"
 #include "target.h"
+#include "stage.h"
 
 #define MAXRIGHTX 40
 #define MAXLEFTX 0
 #define MAXUPY 0
 #define MAXDOWNY 25
+#define MAXTRYNUMBER 6
 
 using namespace std;
 

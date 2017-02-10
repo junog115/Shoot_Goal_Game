@@ -3,22 +3,25 @@
 Player MainPlayer;
 Ball PlayerBall;
 Target PlayerTarget;
-
-int g_nHit = 0;
-string sHitNumber;
-string NoticeKey = 
-" 'J' : Left  |  'L' : Right  |  'K' : Shoot  \n\n 'R' : Reset  |  'Q' : Quit ";
-
+Stage PlayerStage;
 
 void Init();
 void Update();
 void Render();
 void Release();
 
+string sHitNumber;
+string sStage;
+string NoticeKey = " 'J' : Left  |  'L' : Right  |  'K' : Shoot  \n\n 'R' : Reset  |  'Q' : Quit ";
+string sLoose = "You are Fail (Reset : 'R'  |  Quit : 'Q')";
+string sTryShoot;
+
 void KeyProcess(void);
+enum GameState { Play = 1, Loose = 2, MainScreen = 3 };
+GameState PlayInfo = Play;
 
 int _tmain(int argc, _TCHAR* argv[])
-{
+{	
 	ScreenInit();
 	Init();
 
@@ -44,12 +47,32 @@ void Update()
 {
 	KeyProcess();
 
+	// 과녁을 맞췄는지 판별
 	if (PlayerTarget.IsAttackTarget(PlayerBall) == true)
 	{
-		g_nHit++;
+		PlayerStage.UpHitNumber();
 		PlayerBall.SetBallPosition(MainPlayer);
 	}
-	sHitNumber = "Hit target : " + to_string(g_nHit);
+	
+	// 패배 판정 
+	if ((PlayerBall.GetTryShoot()) == MAXTRYNUMBER)
+	{
+		if ((PlayerBall.GetIsReady() == true) && (PlayerStage.GetHitNumber() <= 3) )
+		{
+			PlayInfo = Loose;
+		}
+	}
+
+	// 과녁을 3번 맞췄는지 판별
+	if (PlayerStage.GetHitNumber() == 3)
+	{
+		PlayerStage.ChangeNextStage(PlayerBall, PlayerTarget);
+	}
+
+	// 우측 메뉴에 출력할 데이터 
+	sTryShoot = "Try : " + to_string(PlayerBall.GetTryShoot()) + " / " + to_string(MAXTRYNUMBER);
+	sStage = "Stage : " + to_string(PlayerStage.GetStageNumber());
+	sHitNumber = "Hit target : " + to_string(PlayerStage.GetHitNumber()) + " / 3";
 
 	PlayerTarget.MoveTarget();
 	PlayerBall.SetBallPosition(MainPlayer);
@@ -58,13 +81,31 @@ void Update()
 void Render()
 {
 	ScreenClear();
-	ScreenPrint(MAXRIGHTX + 3, MAXUPY + 3, sHitNumber);
 
-	MainPlayer.PrintPlayer();
-	PlayerBall.PrintBall();
-	PlayerTarget.PrintTarget();
+	switch (PlayInfo)
+	{
+	case Play:
+		ScreenPrint(MAXRIGHTX + 3, MAXUPY + 3, sStage);
+		ScreenPrint(MAXRIGHTX + 3, MAXUPY + 5, sHitNumber);
+		ScreenPrint(MAXRIGHTX + 3, MAXUPY + 7, sTryShoot);
 
-	ScreenPrint(MAXLEFTX, MAXDOWNY, NoticeKey);
+		MainPlayer.PrintPlayer();
+		PlayerBall.PrintBall();
+		PlayerTarget.PrintTarget();
+
+		ScreenPrint(MAXLEFTX, MAXDOWNY, NoticeKey);
+		break;
+	case Loose:
+		ScreenPrint((MAXRIGHTX / 2) + 10, MAXDOWNY / 2, sLoose);
+			break;
+
+	case MainScreen:
+
+		break;
+
+	default:
+		break;
+	}
 
 	ScreenFlipping();
 }
@@ -93,14 +134,14 @@ void KeyProcess(void)
 			break;
 
 		case 'r':
+			PlayInfo = Play;
 			MainPlayer.Reset();
 			PlayerBall.Reset();
 			PlayerTarget.Reset();
-			g_nHit = 0;
+			PlayerStage.Reset();
 			break;
 
 		case 'q':
-			cout << "게임을 종료합니다." << endl;
 			exit(0);
 
 		default:
@@ -108,3 +149,4 @@ void KeyProcess(void)
 		}
 	}
 }
+
